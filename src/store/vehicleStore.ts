@@ -8,6 +8,7 @@ export const useVehicleStore = create<VehicleState>((set) => ({
   battery: 100,
   rotation: 0,
   isFirstPerson: true,
+  movementInput: { forward: 0, side: 0 }, // Add movement input state
 
   dive: () => set((state) => ({
     depth: state.depth < 1000 ? state.depth + 5 : state.depth
@@ -36,5 +37,8 @@ export const useVehicleStore = create<VehicleState>((set) => ({
 
   toggleView: () => set((state) => ({
     isFirstPerson: !state.isFirstPerson
-  }))
+  })),
+
+  setMovementInput: (forward: number, side: number) => 
+    set({ movementInput: { forward, side } })
 }));

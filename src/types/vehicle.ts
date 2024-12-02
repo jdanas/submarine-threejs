@@ -5,6 +5,7 @@ export interface VehicleState {
   battery: number;
   rotation: number;
   isFirstPerson: boolean;
+  movementInput: { forward: number; side: number };
   dive: () => void;
   surface: () => void;
   accelerate: () => void;

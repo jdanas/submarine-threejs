@@ -1,46 +1,81 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { useVehicleStore } from '../store/vehicleStore';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import * as THREE from 'three';
-import React from 'react';
 
 export const Submarine = () => {
   const groupRef = useRef<THREE.Group>(null);
-  const { depth, speed, rotation } = useVehicleStore();
+  const { depth, speed, rotation, setMovementInput } = useVehicleStore();
   const obj = useLoader(OBJLoader, 'public/models/submarine.obj');
-  
-  // Create direction vector for movement
-  const direction = new THREE.Vector3();
-  const frontVector = new THREE.Vector3();
-  const sideVector = new THREE.Vector3();
+
+  // Handle keyboard input
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch(e.key.toLowerCase()) {
+        case 'w':
+        case 'arrowup':
+          setMovementInput(1, 0);
+          break;
+        case 's':
+        case 'arrowdown':
+          setMovementInput(-1, 0);
+          break;
+        case 'a':
+        case 'arrowleft':
+          setMovementInput(0, -1);
+          break;
+        case 'd':
+        case 'arrowright':
+          setMovementInput(0, 1);
+          break;
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      switch(e.key.toLowerCase()) {
+        case 'w':
+        case 's':
+        case 'arrowup':
+        case 'arrowdown':
+          setMovementInput(0, 0);
+          break;
+        case 'a':
+        case 'd':
+        case 'arrowleft':
+        case 'arrowright':
+          setMovementInput(0, 0);
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [setMovementInput]);
 
   useFrame((state, delta) => {
     if (groupRef.current) {
-      // Calculate movement direction
-      const submarineRotation = new THREE.Euler(0, rotation, 0);
-      direction
-        .subVectors(frontVector, sideVector)
-        .normalize()
-        .applyEuler(submarineRotation)
+      // Update submarine position based on movement input
+      const forward = new THREE.Vector3(0, 0, -1)
+        .applyEuler(new THREE.Euler(0, rotation, 0))
         .multiplyScalar(speed * delta);
 
-      // Update submarine position
-      groupRef.current.position.add(direction);
+      groupRef.current.position.add(forward);
       groupRef.current.position.y = -depth / 50;
       groupRef.current.rotation.y = rotation;
 
-      // Update camera position for top-down view
+      // Update camera for top-down view
       state.camera.position.set(
         groupRef.current.position.x,
-        groupRef.current.position.y + 10, // Height above submarine
-        groupRef.current.position.z + 5 // Distance behind submarine
+        groupRef.current.position.y + 10,
+        groupRef.current.position.z + 5
       );
-
-      // Make camera look at submarine
       state.camera.lookAt(groupRef.current.position);
-      
-      // Tilt camera down slightly for better view
       state.camera.rotation.x = -Math.PI / 4;
     }
   });

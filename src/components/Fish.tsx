@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import React from 'react';
 
 interface FishProps {
   position: [number, number, number];
@@ -21,7 +22,7 @@ export const Fish: React.FC<FishProps> = ({
 
   useFrame((state) => {
     if (fishRef.current) {
-      time.current += state.clock.deltaTime * speed;
+      time.current += state.clock.getDelta() * speed;
       
       // More natural swimming motion
       const x = startPosition.current[0] + Math.sin(time.current) * 2;
