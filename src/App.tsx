@@ -11,10 +11,7 @@ function App() {
   return (
     <div className="h-screen w-screen bg-black relative">
       <Canvas shadows style={{ height: '60vh' }}>
-        {/* Add ambient light for general illumination */}
         <ambientLight intensity={0.5} />
-        
-        {/* Add a directional light to simulate sunlight */}
         <directionalLight 
           castShadow 
           position={[10, 10, 5]} 
@@ -27,14 +24,8 @@ function App() {
           shadow-camera-top={10}
           shadow-camera-bottom={-10}
         />
-        
-        {/* Add stars to the background */}
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade />
-        
-        {/* Add orbit controls for better interactivity */}
-        <OrbitControls />
-        
-        <CameraControls />
+        {/* Remove OrbitControls */}
         <Environment />
         <Submarine />
       </Canvas>
@@ -43,5 +34,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
