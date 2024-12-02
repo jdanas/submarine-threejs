@@ -13,7 +13,11 @@
     "paths": {
       "~/*": ["app/*"],
       "@/*": ["app/*"]
-    }
+    },
+    "moduleResolution": "node",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "lib": ["ES2015", "DOM"]
   },
   "include": ["app/**/*"],
   "files": ["./references.d.ts"],
