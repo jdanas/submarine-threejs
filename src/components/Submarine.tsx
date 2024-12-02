@@ -3,6 +3,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { useVehicleStore } from '../store/vehicleStore';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import * as THREE from 'three';
+import React from 'react';
 
 export const Submarine = () => {
   const groupRef = useRef<THREE.Group>(null);

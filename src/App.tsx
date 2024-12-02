@@ -5,11 +5,12 @@ import { CameraControls } from './components/CameraControls';
 import { CockpitOverlay } from './components/CockpitOverlay';
 import { Submarine } from './components/Submarine';
 import { OrbitControls, Stars } from '@react-three/drei';
+import React from 'react';
 
 function App() {
   return (
     <div className="h-screen w-screen bg-black relative">
-      <Canvas shadows>
+      <Canvas shadows style={{ height: '60vh' }}>
         {/* Add ambient light for general illumination */}
         <ambientLight intensity={0.5} />
         

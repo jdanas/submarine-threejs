@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useVehicleStore } from '../store/vehicleStore';
+import * as THREE from 'three';
+import React from 'react';
 
 export const CameraControls = () => {
   const { camera } = useThree();
@@ -16,9 +18,10 @@ export const CameraControls = () => {
   useFrame(() => {
     if (submarineRef.current) {
       // Update camera position to follow the submarine
-      camera.position.copy(submarineRef.current.position);
+      const submarinePosition = submarineRef.current.position;
+      camera.position.copy(submarinePosition);
       camera.position.z += 5; // Adjust the distance from the submarine
-      camera.lookAt(submarineRef.current.position);
+      camera.lookAt(submarinePosition);
     }
   });
 
