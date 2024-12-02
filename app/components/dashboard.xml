@@ -1,0 +1,36 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd">
+    <GridLayout rows="auto, *, auto" columns="*" class="p-4">
+        <!-- Status Panel -->
+        <GridLayout row="0" columns="*, *, *, *" class="mb-4">
+            <StackLayout col="0" class="text-center">
+                <Label text="Depth" class="text-gray-500" />
+                <Label text="{{ depth }}m" class="font-bold" />
+            </StackLayout>
+            <StackLayout col="1" class="text-center">
+                <Label text="Speed" class="text-gray-500" />
+                <Label text="{{ speed }}kts" class="font-bold" />
+            </StackLayout>
+            <StackLayout col="2" class="text-center">
+                <Label text="O₂" class="text-gray-500" />
+                <Label text="{{ oxygen }}%" class="font-bold" />
+            </StackLayout>
+            <StackLayout col="3" class="text-center">
+                <Label text="Battery" class="text-gray-500" />
+                <Label text="{{ battery }}%" class="font-bold" />
+            </StackLayout>
+        </GridLayout>
+
+        <!-- Viewport -->
+        <ContentView row="1" class="bg-blue-900 rounded-lg mb-4">
+            <Label text="Underwater View" class="text-white text-center" />
+        </ContentView>
+
+        <!-- Controls -->
+        <GridLayout row="2" rows="auto, auto" columns="*, *" class="bg-gray-100 rounded-lg p-4">
+            <Button text="↑ Surface" row="0" col="0" tap="{{ surface }}" class="m-1" />
+            <Button text="↓ Dive" row="0" col="1" tap="{{ dive }}" class="m-1" />
+            <Button text="+ Speed Up" row="1" col="0" tap="{{ accelerate }}" class="m-1" />
+            <Button text="- Slow Down" row="1" col="1" tap="{{ decelerate }}" class="m-1" />
+        </GridLayout>
+    </GridLayout>
+</Page>
