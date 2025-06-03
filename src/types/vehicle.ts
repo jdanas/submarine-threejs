@@ -13,4 +13,5 @@ export interface VehicleState {
   turnLeft: () => void;
   turnRight: () => void;
   toggleView: () => void;
+  setMovementInput: (forward: number, side: number) => void;
 }
